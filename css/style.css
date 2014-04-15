@@ -1,0 +1,151 @@
+
+html, body {
+    margin: 0;
+    padding: 0; 
+}
+
+
+h1, h2, h3, h4 {
+    font-family: 'Bevan';
+    color: #292929;
+}
+
+p {
+    font-family: 'Times New Roman';
+    font-size: 100%; 
+    
+}
+
+#twitter-feed {
+    border: solid 1px black;
+    padding: .5em;
+    margin: 0;
+    text-align: center;
+  
+}
+
+#map-wrapper {
+    border: 1px solid black;
+   
+    margin: 0;
+    
+}
+
+#map-canvas {
+    height: 600px;
+    
+}
+
+ol, li {
+    font-family: "Bevan";
+    
+}
+
+a {
+    color: black;
+    text-decoration: none; 
+}
+
+
+.links:hover {
+    color: #E20000; 
+}
+
+a:hover {
+    color: black; 
+    text-decoration: none; 
+}
+
+#top {
+    display: inline; 
+    text-align: right;
+    font-size: 100%;
+    
+}
+
+#bird {
+    float: right;
+    display: inline; 
+}
+.breadcrumb  {
+    margin: 0 auto;
+    text-align: center; 
+    background-color: #fff;
+
+}
+.main-title {
+
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 0; 
+}
+
+#twitter-title {
+    display: inline;
+    
+}
+
+.divider {
+    height: .5em;
+    background-color: #E20000;
+    width: 100%;
+    margin: 0 auto; 
+    
+}
+
+
+h1 {
+    font-size: 300%;
+    padding: .5em;
+    margin: 0; 
+}
+
+#instafeed {
+    margin: 0 auto; 
+    padding: 0;
+    margin-bottom: 2em;
+    text-align: center; 
+}
+
+#instafeed img {
+    padding: .25em;
+    width: 120px;
+    height: 80px;
+}
+
+#flickr {
+    display: inline-block;
+  
+}
+
+#flickr img {
+    padding: .25em; 
+    width: 120px;
+    height: 80px;
+
+}
+
+#results2 {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0; 
+}
+
+h2 {
+ 
+    border-bottom: solid 1px black; 
+}
+
+.links {
+    text-align: left;
+    color: gray; 
+}
+
+.nyt-links {
+    color: #292929; 
+}
+
+.nyt-links:hover {
+    color: #3B5323; 
+}

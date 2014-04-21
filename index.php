@@ -12,7 +12,8 @@
 
 <script src="instagram.js" type="text/javascript"></script>
 <script src="js/instafeed.min.js" type="text/javascript"></script>
-
+<script src="js/jquery.tweet-linkify.js" type="text/javascript"></script>
+<script src="js/moment.min.js"></script>
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnUYsb0m0jnj14iFtjgj4pSaCV7mplGAI&sensor=false"></script>
 
@@ -231,7 +232,8 @@ var html = ""  // string to hold data before writing to page
                     //html += '<p>Title:"' + data.title +'"</p>';
                     html += "<div id='" + 'flickr' + "'>"; 
                     //html += '<p>From:"'+ data.author_id+'"</p>';
-                    html += "<a href='" + data.link + "'><img src='" + data.media.m + "'></a></div>";
+                    html += "<a href='" + data.link + "'>";
+                    html += "<img src='" + data.media.m + "'></a></div>";
                     });
                 console.log(html);
                 //after loop code
@@ -244,7 +246,7 @@ var html = ""  // string to hold data before writing to page
 
 
     var html2 = ""  // string to hold data before writing to page
-    var apiurl2 = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=syria&begin_date=20140401&end_date=20140413&api-key=878c4b41e76e124a94e1371205a9d76b:11:69168380"
+    var apiurl2 = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=syria&begin_date=20140410&end_date=20140421&api-key=878c4b41e76e124a94e1371205a9d76b:11:69168380"
 
    
    function loadNYT() {
@@ -258,7 +260,7 @@ var html = ""  // string to hold data before writing to page
             
                  $.each(times,function(i,data){
                   
-                 
+          
                   
                    html2 += '<h4><a class="nyt-links" href="' + data.web_url + '">' + data.headline.main + '</a></p>';
                    
@@ -277,12 +279,62 @@ var html = ""  // string to hold data before writing to page
                 $("#results3").append(html2);
             });
             
-  
+    pageReady();
     }
 
+    function pageReady() {
+      $('p.tweet').tweetLinkify(); 
+   
+    loadOpenLibrary(); 
+    };
 
+  function loadOpenLibrary() {
+  
+  var html3 =""; 
+  var apiurl3 = "https://openlibrary.org/search.json?q=syria+politics?"; 
 
-
+  
+  $.getJSON(apiurl3,function(data){
+                console.log(data);
+                console.log(data.docs);
+                
+                var title = data.docs.title;
+                var author = data.docs.author_name;
+                var year = data.docs.publish_year;
+                var publisher = data.docs.publisher; 
+                
+      
+            
+          /*       $.each(docs,function(i,data){
+                  
+                 
+                  
+                   html3 += '<h4><a class="nyt-links" href="' + data.web_url + '">' + data.headline.main + '</a></p>';
+                   
+                    if (data.byline != 0) {
+                    html2 += '<p>' + data.byline.original + '</p>';
+                  
+                    }
+                   
+                   html2 += '<p>Published: ' + data.pub_date + '</p>';
+                   html2 += '<p>' + data.snippet +'</p>';
+                   html2 += '<hr>'
+                    });
+                 
+               
+                //after loop code
+                $("#results4").append(html3);
+          
+          */
+          
+            });
+  
+  
+  
+  
+  
+  
+  }
     </script>
     
 
@@ -291,9 +343,10 @@ var html = ""  // string to hold data before writing to page
 <div class="row">
 <div class="col-md-12"><a name="#"><h1 class="main-title">Syria: Civil War Rages On</h1></a>
 <ol class="breadcrumb">
-  <li><a class="links" href="#tweets">Tweets</a></li>
-  <li><a class="links" href="#map">Map</a></li>
-  <li><a class="links" href="#photos">Photos</a></li>
+  <li><a class="nyt-links" href="#tweets">Tweets</a></li>
+  <li><a class="nyt-links" href="#map">Map</a></li>
+  <li><a class="nyt-links" href="#photos">Photos</a></li>
+  <li><a class="nyt-links" href="#nyt">Articles</a></li>
 </ol>
 
 </div>
@@ -336,7 +389,7 @@ $settings = array(
 /** Perform a GET request and echo the response **/
 /** Note: Set the GET field BEFORE calling buildOauth(); **/
 $url = 'https://api.twitter.com/1.1/search/tweets.json';
-$getfield = '?q=%23Syria&count=8&lang=en';
+$getfield = '?q=%23syrianwar&count=8&lang=en&result_type=recent';
 $requestMethod = 'GET';
 $twitter = new TwitterAPIExchange($settings);
 //echo $twitter->setGetfield($getfield)
@@ -346,12 +399,19 @@ $twitter = new TwitterAPIExchange($settings);
 $string = json_decode($twitter->setGetField($getfield)
                      ->buildOauth($url, $requestMethod)
                      ->performRequest(), $assoc = TRUE);
+             
 
 foreach ($string['statuses']as $items)
 {
+    $user = $items['user'];
+    $date = $items['created_at'];
+    
+  
+    echo "<p class='photo'><a href='http://www.twitter.com/" . $user['screen_name'] ."'</a><img src='" . $user['profile_image_url_https']. "'>"; 
+     echo "<p class='tweet' id='user_name'><a href='http://www.twitter.com/". $user['screen_name'] . "'>" .$user['screen_name'] ."</a> @". $user['screen_name'] . "</br>"; 
+ echo "<p class='tweet' id='twitter_text'>" . $items['text'] . "<br>"; 
 
- echo "<p>Tweet: " . $items['text'] . "<br>"; 
- echo "When: " . $items['created_at'] . "</p>";
+ echo "<p id='time'>When: ".$datenew = date("l jS \of F h:i:s A", strtotime("$date"))."</p>"; 
  echo "<hr>"; 
 }
 
@@ -359,8 +419,8 @@ foreach ($string['statuses']as $items)
 
 </div> <!--end #twitter-feed -->
 
- <h2>Photos from Flickr</h2><p class="links"><a class="links" href="#">Return to top</a></p><div id="results2"></div>
-<h2><a name="photos">Photos from Instagram</a></h2> <div id="instafeed"><p class="links"><a class="links" href="#">Return to top</a></p></div>
+ <h2><a name="photos">Photos from Flickr</h2><p class="links"><a class="links" href="#">Return to top</a></p><div id="results2"></div>
+<h2>Photos from Instagram</a></h2> <div id="instafeed"><p class="links"><a class="links" href="#">Return to top</a></p></div>
      
 
 </div> <!--end col-md-4-->
@@ -368,11 +428,15 @@ foreach ($string['statuses']as $items)
 <div class="col-md-8 col-sm-12">
    <a name="map"><h2>Cities in Struggle</h2></a>
     <p><a class="links" href="#">Return to top</a></p>
+    <p><i>The following Syrian cities and suburbs have seen intense fighting and heavy casualties since 2011.</i></p>
   <div id="map-wrapper"><div id="map-canvas" style="width: 100%; height: 100%"></div></div>
        
-<a name="articles"><h2>Articles from The New York Times</h2></a>
+<a name="nyt"><h2>Recent Articles from <i>The New York Times</i></h2></a>
 <a class="links" href="#"><p>Return to top</a></p>
 <div id="results3"></div>
+
+
+<div id="results4"></div>
 </div> <!--end col-md-8 --> 
 
 </div>  <!--end row-->

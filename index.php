@@ -9,14 +9,14 @@
 
 <link href='http://fonts.googleapis.com/css?family=Bevan' rel='stylesheet' type='text/css'>
 <script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>
-
+<script src="js/jquery.scrollUp.min.js"></script>
   <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
 <script src="instagram.js" type="text/javascript"></script>
 <script src="js/instafeed.min.js" type="text/javascript"></script>
 <script src="js/jquery.tweet-linkify.js" type="text/javascript"></script>
-<script src="js/moment.min.js"></script>
+
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnUYsb0m0jnj14iFtjgj4pSaCV7mplGAI&sensor=false"></script>
 
@@ -30,6 +30,11 @@
     var number = [];
     
     $(document).ready(function() {
+                
+                
+                
+       //load Timeline          
+                
                 createStoryJS({
                     type:       'timeline',
                     width:      '100%',
@@ -40,8 +45,15 @@
                 });
                 
             });
+    
+    
+  $.scrollUp('#scrollUp');
+
   </script>
 <script type= "text/javascript">
+
+
+// create Google Map
 
       function initialize() {
         
@@ -90,7 +102,7 @@
       '</div>'+
       '<h3 id="firstHeading" class="firstHeading">Homs</h3>'+
       '<div id="bodyContent">'+
-      '<p><img src="homs.jpg" width="100%" height="150"><br><b>Homs</b>, is, according to the BBC, the capital of the Syrian Revolution. Although coming under control of opposition forces in 2011, a government offensive reclaimed parts of the city. As of Februrary 2014, up to 3,000 citizens were still trapped in the city without access to basic supplies. ' +
+      '<p><img src="homs.jpg" width="100%" height="140"><br><b>Homs</b>, is, according to the BBC, the capital of the Syrian Revolution. Although coming under control of opposition forces in 2011, a government offensive reclaimed parts of the city. As of Februrary 2014, up to 3,000 citizens were still trapped in the city without access to basic supplies. ' +
       '</p>'+
       '<p>Attribution: <a class="links" href="http://www.bbc.com/news/world-middle-east-15625642">'+
       'BBC News</a></p><br>'+
@@ -99,7 +111,7 @@
 
   var infowindow = new google.maps.InfoWindow({
       content: contentString,
-      maxWidth: 150
+      maxWidth: 175
   });
   
     var contentString2 = '<div id="content">'+
@@ -107,7 +119,7 @@
       '</div>'+
       '<h3 id="firstHeading" class="firstHeading">Hamah</h3>'+
       '<div id="bodyContent">'+
-      '<p><img src="hama.jpg" width="100%" height="150"><br><b>Hamah</b> is a long-time stronghold of political opposition to the Assad regime. In April 2013, opposition forces launched an offensive against government forces. To date, almost 8,000 people have been killed in the conflict here. </p>'+
+      '<p><img src="hama.jpg" width="100%" height="140"><br><b>Hamah</b> is a long-time stronghold of political opposition to the Assad regime. In April 2013, opposition forces launched an offensive against government forces. To date, almost 8,000 people have been killed in the conflict here. </p>'+
       '<p>Attributions: <a class="links" href="http://www.vdc-sy.info/index.php/en/">'+
       'Violations Documentation Center in Syria' +
       '</a><br>Photo: <a class="links" href="http://upload.wikimedia.org/wikipedia/commons/8/84/Hama%2C_Syria_01.jpg">Bernard Gagnon, via Wikimedia Commons</a></p><br>'+
@@ -116,7 +128,7 @@
   
   var infowindow2 = new google.maps.InfoWindow({
       content: contentString2,
-      maxWidth: 150
+      maxWidth: 175
   });
   
   
@@ -125,7 +137,7 @@
       '</div>'+
       '<h3 id="firstHeading" class="firstHeading">Aleppo</h3>'+
       '<div id="bodyContent">'+
-      '<p><img src="aleppo.jpg" width="100%" height="150"><br><b>Aleppo</b> erupted again on April 12 as opposition fighters advanced in the Ramouseh district.' +
+      '<p><img src="aleppo.jpg" width="100%" height="140"><br><b>Aleppo</b> erupted again on April 12 as opposition fighters advanced in the Ramouseh district.' +
       ' Since 2011, over 19,000 people have been killed here in the conflict.</p>'+
       '<p>Attribution: <a class="links" href="http://www.aljazeera.com/news/middleeast/2014/04/syria-rebels-advance-aleppo-city-2014412101712303691.html">'+
       'Al Jazeera</a> '+
@@ -135,7 +147,7 @@
 
   var infowindow3 = new google.maps.InfoWindow({
       content: contentString3,
-      maxWidth: 150
+      maxWidth: 175
   });
   
   
@@ -144,8 +156,8 @@
       '</div>'+
       '<h3 id="firstHeading" class="firstHeading">Damascus</h3>'+
       '<div id="bodyContent">'+
-      '<p><img src="damascus.jpg" width="100%" height="150"><br><b>Damascus</b> is currently under seige as Syrian jet fighters began striking opposition strongholds on April 13. A battle also occured here in July 2012 lasting three weeks, with the Syrian army defeating opposition groups. At least 29,000 people have died in Damsacus and surrounding suburbs since 2011.' +
-      ' Since 2011, over 19,000 people have been killed here in the conflict.</p>'+
+      '<p><img src="damascus.jpg" width="100%" height="140"><br><b>Damascus & Rif Dimashq</b> are under seige as Syrian jet fighters began striking opposition strongholds on April 13. A battle also occured here in July 2012 lasting three weeks. At least 29,000 people have died in Damsacus and its suburbs since 2011.' +
+      '</p>'+
       '<p>Attribution: <a class="links" href="http://www.aljazeera.com/news/middleeast/2014/04/syrian-jets-hit-rebel-bastions-near-damascus-2014413162921799697.html">'+
       'Al Jazeera</a><br>Photo: <a class="links" href="http://upload.wikimedia.org/wikipedia/commons/9/9f/Syrian_Demonstration_Douma_Damascus_08-04-2011.jpg" >shamsnn, via Wikimedia Commons </a>'+
       '</p><br>'+
@@ -154,7 +166,7 @@
 
   var infowindow4 = new google.maps.InfoWindow({
       content: contentString4,
-      maxWidth: 150
+      maxWidth: 175
   });
   
   
@@ -211,12 +223,13 @@
          
                
       }
-     
+      
+    //load Instagram images  
       google.maps.event.addDomListener(window, 'load', initialize);
         
         var feed = new Instafeed({
         get: 'tagged',
-        tagName: 'syrianrevolution',
+        tagName: 'syrianwar',
         clientId: '1af56aaa01ef4001bc99e812d2b083b4'
     });
     feed.run();
@@ -243,6 +256,7 @@
                 }
     });
  
+ //load chart
   
   function writeChart() {
    
@@ -279,7 +293,7 @@
                 }
             },
             plotOptions: {
-                 size: '90%',
+                 groupPadding: 0.05,
                  bar: {
                     dataLabels: {
                         enabled: true
@@ -307,6 +321,7 @@ var html = ""  // string to hold data before writing to page
     //use any of the flickr api endpoints
     var apiurl = "http://api.flickr.com/services/feeds/photos_public.gne?tags=SyrianWar&tagmode=any&format=json&jsoncallback=?"
    
+   //load Flickr images
    
    function loadFlckr(){
           
@@ -332,9 +347,11 @@ var html = ""  // string to hold data before writing to page
     }
 
 
-
+  //load NY Times data
+  
     var html2 = ""  // string to hold data before writing to page
-    var apiurl2 = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=syria+war&begin_date=20140408&end_date=20140429&api-key=878c4b41e76e124a94e1371205a9d76b:11:69168380"
+    var apiurl2 = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=syria+war&begin_date=20140408&end_date=20140430&api-key=878c4b41e76e124a94e1371205a9d76b:11:69168380"
+
 
    
    function loadNYT() {
@@ -365,12 +382,17 @@ var html = ""  // string to hold data before writing to page
     pageReady();
     }
 
+    // linkify Tweets
+    
     function pageReady() {
       $('p.tweet').tweetLinkify(); 
    
     loadOpenLibrary(); 
     };
 
+  
+  //load Guardian news data
+  
   function loadOpenLibrary() {
   
   
@@ -387,9 +409,10 @@ $.ajax({
 } 
  var html3 ="";
 
- 
+
+
 function loadGuardian(data) {
-     
+
       var results = data.response.results; 
 
        var guardianDate = data.response.results.webPublicationDate;
@@ -414,8 +437,6 @@ function loadGuardian(data) {
 
 
   
-  
-
     </script>
     
 
@@ -446,10 +467,10 @@ function loadGuardian(data) {
 
 <div class="col-md-4">
   <div id="twitter-title">
-  <h2><a name="tweets">#Syria <a href="https://twitter.com/search?q=syrian%20war&src=typd"><img src="Twitter_logo_blue.png" height="25" width="30"></a></h2></a>
+  <h2><a name="tweets">#SyrianWar <a href="https://twitter.com/search?q=syrian%20war&src=typd"><img src="Twitter_logo_blue.png" height="25" width="30"></a></h2></a>
   </div>
+
   
-    <p><a class="links" href="#">Return to top</a></p>
 <div id="twitter-feed">
 
 <?php
@@ -469,7 +490,7 @@ $settings = array(
 /** Perform a GET request and echo the response **/
 /** Note: Set the GET field BEFORE calling buildOauth(); **/
 $url = 'https://api.twitter.com/1.1/search/tweets.json';
-$getfield = '?q=%23syrianwar&count=6&lang=en&result_type=recent';
+$getfield = '?q=%23syrianwar&count=7&lang=en&result_type=recent';
 $requestMethod = 'GET';
 $twitter = new TwitterAPIExchange($settings);
 //echo $twitter->setGetfield($getfield)
@@ -497,15 +518,14 @@ foreach ($string['statuses']as $items)
 
 </div> <!--end #twitter-feed -->
 
- <h2><a name="photos">Photos from Flickr</h2><p class="links"><a class="links" href="#">Return to top</a></p><div id="results2"></div>
-<h2>Photos from Instagram</a></h2> <div id="instafeed"><p class="links"><a class="links" href="#">Return to top</a></p></div>
+ <h2><a name="photos">Photos from Flickr</h2><div id="results2"></div>
+<h2>Photos from Instagram</a></h2> <div id="instafeed"></div>
      
 
 </div> <!--end col-md-4-->
 
 <div class="col-md-8 col-sm-12">
    <a name="map"><h2>Cities in Struggle</h2></a>
-    <p><a class="links" href="#">Return to top</a></p>
     <p><i>The following Syrian cities and suburbs have seen intense fighting and heavy casualties since 2011. Click on the graph tab to see the death toll by city.</i></p>
     
     
@@ -517,12 +537,12 @@ foreach ($string['statuses']as $items)
   <div class="tab-content">
   <div class="tab-pane active" id="map-wrapper">
   <div id="map-wrapper"><div id="map-canvas" style="width: 100%; height: 100%"></div></div></div>
-  <div class="tab-pane" id="highchart"><div id="chart" style="height: 90%"></div></div>
+  <div class="tab-pane" id="highchart"><div id="chart"></div></div>
 </div>
     
 
   <a name="nyt"><h2>Recent Articles in the News</h2></a>
-  <a class="links" href="#"><p>Return to top</a></p>
+
   <ul class="nav nav-tabs">
   <li class="active"><a class="news-links" href="#nytimes" data-toggle="tab">The New York Times</a></li>
   <li><a class="news-links" href="#guardian" data-toggle="tab">The Guardian</a></li>
@@ -534,10 +554,10 @@ foreach ($string['statuses']as $items)
     <div id="results3"></div></div>
   <div class="tab-pane" id="guardian"><div id="results4"></div></div>
 </div>
-<a class="links" href="#"><p>Return to top</a></p>
 
 
-<div id="chart"></div>
+
+<!--<div id="chart"></div>-->
 
 </div> <!--end col-md-8 --> 
 

@@ -1,8 +1,4 @@
-@media (max-width: 600px) {
-    h1 {
-        font-size: 250%; 
-    }
-}
+
 
 html, body {
     margin: 0;
@@ -19,6 +15,7 @@ html, body {
     background-color: #000000; 
 }
 
+
 h1, h2, h3, h4 {
     font-family: 'Bevan';
     color: #292929;
@@ -30,6 +27,12 @@ p {
     
 }
 
+
+#chart {
+ width: 50%;
+ height: 600px; 
+    
+}
 .tweet a {
     color: #3F602B;
   
@@ -40,6 +43,16 @@ hr {
     padding: 0;
     
 }
+
+#scrollUp {
+  bottom: 2.5em;
+  right: 30px;
+  padding: .75em;
+  background: #555;
+  color: #fff;
+}
+
+
 
 #twitter-feed {
     border: solid 1px black;
@@ -148,6 +161,7 @@ a:hover {
     float: right;
     display: inline; 
 }
+
 .breadcrumb  {
     margin: 0 auto;
     text-align: center; 
@@ -234,4 +248,22 @@ h2 {
 
 .news-links {
     color: #3F602B;
+}
+
+/* re-size for mobile */
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 200%; 
+    }
+    #chart {
+        width: 100%;
+
+    }
+    
+    #scrollUp {
+  bottom: 1.5em;
+  right: 35px;
+
+}
 }

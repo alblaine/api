@@ -10,6 +10,9 @@
 <link href='http://fonts.googleapis.com/css?family=Bevan' rel='stylesheet' type='text/css'>
 <script src="http://codeorigin.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>
 
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
 <script src="instagram.js" type="text/javascript"></script>
 <script src="js/instafeed.min.js" type="text/javascript"></script>
 <script src="js/jquery.tweet-linkify.js" type="text/javascript"></script>
@@ -22,6 +25,10 @@
 <body>
   
   <script>
+    
+    var region = [];
+    var number = [];
+    
     $(document).ready(function() {
                 createStoryJS({
                     type:       'timeline',
@@ -31,7 +38,7 @@
                     source:     'https://docs.google.com/spreadsheet/pub?key=0AsYd2Ac46wYWdFdlN1pJNkFVcGkyT25ETDYzNHR3NXc&output=html',
                     embed_id:   'my-timeline'
                 });
-                loadFlckr(); 
+                
             });
   </script>
 <script type= "text/javascript">
@@ -71,7 +78,7 @@
         var mapOptions = {
           center: new google.maps.LatLng(35.2167, 37.5833),
           zoom: 7,
-          draggable: false,
+          draggable: true,
           scrollwheel: false
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -92,7 +99,7 @@
 
   var infowindow = new google.maps.InfoWindow({
       content: contentString,
-      maxWidth: 250
+      maxWidth: 150
   });
   
     var contentString2 = '<div id="content">'+
@@ -100,7 +107,7 @@
       '</div>'+
       '<h3 id="firstHeading" class="firstHeading">Hamah</h3>'+
       '<div id="bodyContent">'+
-      '<p><img src="hama.jpg" width="100%" height="150"><br><b>Hamah</b>, a city where a massacre occured in 1982 at the hands of the government in response to a Sunni rebellion, is a long-time stronghold of political opposition to the Assad regime. In April 2013, opposition forces launched an offensive against government forces. To date, almost 8,000 people have been killed in the conflict here. </p>'+
+      '<p><img src="hama.jpg" width="100%" height="150"><br><b>Hamah</b> is a long-time stronghold of political opposition to the Assad regime. In April 2013, opposition forces launched an offensive against government forces. To date, almost 8,000 people have been killed in the conflict here. </p>'+
       '<p>Attributions: <a class="links" href="http://www.vdc-sy.info/index.php/en/">'+
       'Violations Documentation Center in Syria' +
       '</a><br>Photo: <a class="links" href="http://upload.wikimedia.org/wikipedia/commons/8/84/Hama%2C_Syria_01.jpg">Bernard Gagnon, via Wikimedia Commons</a></p><br>'+
@@ -109,7 +116,7 @@
   
   var infowindow2 = new google.maps.InfoWindow({
       content: contentString2,
-      maxWidth: 250
+      maxWidth: 150
   });
   
   
@@ -128,7 +135,7 @@
 
   var infowindow3 = new google.maps.InfoWindow({
       content: contentString3,
-      maxWidth: 250
+      maxWidth: 150
   });
   
   
@@ -147,7 +154,7 @@
 
   var infowindow4 = new google.maps.InfoWindow({
       content: contentString4,
-      maxWidth: 250
+      maxWidth: 150
   });
   
   
@@ -214,6 +221,87 @@
     });
     feed.run();
  
+ 
+
+             $.ajax({
+		type: "GET",
+		url: "count.xml",
+		dataType: "xml",
+		success: function(xml) {
+
+                  
+        $(xml).find("city").each(function(index){
+            var $city = $(this);
+
+            region.push($city.find('region').text());
+            number.push(parseInt($city.find('number').text())); 
+        
+        });
+        
+                
+		writeChart();
+                }
+    });
+ 
+  
+  function writeChart() {
+   
+     $('#chart').highcharts
+        var chart = new Highcharts.Chart({
+        chart: {
+          type: 'bar',
+          renderTo: 'chart'
+        },
+        title: {
+                text: 'Syrian War Dead, By City',
+                style: {fontFamily: 'TimesNewRoman', color: '#000000', fontSize: '18px'}
+            },
+            subtitle: {
+                text: 'Estimated Death Toll Among Civilian and Opposition Forces as of March 31, 2014. Total: 101,855',
+                 style: {fontFamily: 'TimesNewRoman', color: '#000000', fontSize: '14px'}
+            },
+
+         xAxis: {
+                categories: region,
+                title: {
+                    text: null
+                }
+            },
+         yAxis: {
+                min: 0,
+                title: {
+                    text: 'Source: Wikipedia.org, "Casualties of the Syrian Civil War"',
+                    align: 'high',
+                    style: {fontFamily: 'TimesNewRoman', color: '#000000', fontSize: '10px'}
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            plotOptions: {
+                 size: '90%',
+                 bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+        
+            credits: {
+                enabled: false
+            },
+        
+        series: [{
+                
+                    name: 'Total',
+                    data: number,
+                    color: '#707070'
+    
+            }]
+        
+        });
+        loadFlckr();
+  }
     
 var html = ""  // string to hold data before writing to page
     //use any of the flickr api endpoints
@@ -246,25 +334,20 @@ var html = ""  // string to hold data before writing to page
 
 
     var html2 = ""  // string to hold data before writing to page
-    var apiurl2 = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=syria&begin_date=20140410&end_date=20140421&api-key=878c4b41e76e124a94e1371205a9d76b:11:69168380"
+    var apiurl2 = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=syria+war&begin_date=20140408&end_date=20140429&api-key=878c4b41e76e124a94e1371205a9d76b:11:69168380"
 
    
    function loadNYT() {
       
             $.getJSON(apiurl2,function(data){
-                console.log(data);
-                console.log(data.response.docs);
                 var times = data.response.docs;
-        
-                
-            
+                console.log(times); 
                  $.each(times,function(i,data){
                   
-          
-                  
+      
                    html2 += '<h4><a class="nyt-links" href="' + data.web_url + '">' + data.headline.main + '</a></p>';
                    
-                    if (data.byline != 0) {
+                   if (data.byline != 0 ) {
                     html2 += '<p>' + data.byline.original + '</p>';
                   
                     }
@@ -290,67 +373,66 @@ var html = ""  // string to hold data before writing to page
 
   function loadOpenLibrary() {
   
-  var html3 =""; 
-  var apiurl3 = "https://openlibrary.org/search.json?q=syria+politics?"; 
+  
+  var apiurl3 = "http://content.guardianapis.com/search?q=syria&api-key=qnhewepyj6xfty2guy2y4vf4"; 
+
+$.ajax({
+    type: "GET",
+    url: "http://content.guardianapis.com/search?q=syria+war&date-id=date%2Flast20days&api-key=qnhewepyj6xfty2guy2y4vf4",
+    dataType: "jsonp",
+    crossDomain: true,
+    success: loadGuardian 
+  });
+
+} 
+ var html3 ="";
+
+ 
+function loadGuardian(data) {
+     
+      var results = data.response.results; 
+
+       var guardianDate = data.response.results.webPublicationDate;
+ 
+         
+      
+                
+             $.each(results, function(index,results){
+              
+              console.log(data.response.results.webTitle); 
+                 html3 += '<br><h4><a class="nyt-links" href="' + data.response.results[index].webUrl + '">' + data.response.results[index].webTitle + '</a></p>';
+                html3 += '<p>Published: ' + results.webPublicationDate + '</p>';
+                html3 += '<hr>'; 
+                
+             });
+                
+                console.log(html3);
+                console.log("hi"); 
+           $("#results4").append(html3);
+
+}
+
 
   
-  $.getJSON(apiurl3,function(data){
-                console.log(data);
-                console.log(data.docs);
-                
-                var title = data.docs.title;
-                var author = data.docs.author_name;
-                var year = data.docs.publish_year;
-                var publisher = data.docs.publisher; 
-                
-      
-            
-          /*       $.each(docs,function(i,data){
-                  
-                 
-                  
-                   html3 += '<h4><a class="nyt-links" href="' + data.web_url + '">' + data.headline.main + '</a></p>';
-                   
-                    if (data.byline != 0) {
-                    html2 += '<p>' + data.byline.original + '</p>';
-                  
-                    }
-                   
-                   html2 += '<p>Published: ' + data.pub_date + '</p>';
-                   html2 += '<p>' + data.snippet +'</p>';
-                   html2 += '<hr>'
-                    });
-                 
-               
-                //after loop code
-                $("#results4").append(html3);
-          
-          */
-          
-            });
   
-  
-  
-  
-  
-  
-  }
+
     </script>
     
 
-
-
+<div id="header"></div>
+<div class="container">
 <div class="row">
 <div class="col-md-12"><a name="#"><h1 class="main-title">Syria: Civil War Rages On</h1></a>
 <ol class="breadcrumb">
   <li><a class="nyt-links" href="#tweets">Tweets</a></li>
-  <li><a class="nyt-links" href="#map">Map</a></li>
+  <li><a class="nyt-links" href="#map">Map & Graph</a></li>
   <li><a class="nyt-links" href="#photos">Photos</a></li>
   <li><a class="nyt-links" href="#nyt">Articles</a></li>
 </ol>
 
 </div>
 </div><!--close row-->
+</div>
 <div class="container">
         <div class="divider"></div>
         
@@ -359,14 +441,12 @@ var html = ""  // string to hold data before writing to page
     
   <div id="my-timeline"></div>
   </div>
-
-
-     
+ 
 
 
 <div class="col-md-4">
   <div id="twitter-title">
-  <h2><a name="tweets">#Syria <img src="Twitter_logo_blue.png" height="25" width="30"></h2></a>
+  <h2><a name="tweets">#Syria <a href="https://twitter.com/search?q=syrian%20war&src=typd"><img src="Twitter_logo_blue.png" height="25" width="30"></a></h2></a>
   </div>
   
     <p><a class="links" href="#">Return to top</a></p>
@@ -389,7 +469,7 @@ $settings = array(
 /** Perform a GET request and echo the response **/
 /** Note: Set the GET field BEFORE calling buildOauth(); **/
 $url = 'https://api.twitter.com/1.1/search/tweets.json';
-$getfield = '?q=%23syrianwar&count=8&lang=en&result_type=recent';
+$getfield = '?q=%23syrianwar&count=6&lang=en&result_type=recent';
 $requestMethod = 'GET';
 $twitter = new TwitterAPIExchange($settings);
 //echo $twitter->setGetfield($getfield)
@@ -407,12 +487,10 @@ foreach ($string['statuses']as $items)
     $date = $items['created_at'];
     
   
-    echo "<p class='photo'><a href='http://www.twitter.com/" . $user['screen_name'] ."'</a><img src='" . $user['profile_image_url_https']. "'>"; 
-     echo "<p class='tweet' id='user_name'><a href='http://www.twitter.com/". $user['screen_name'] . "'>" .$user['screen_name'] ."</a> @". $user['screen_name'] . "</br>"; 
- echo "<p class='tweet' id='twitter_text'>" . $items['text'] . "<br>"; 
-
- echo "<p id='time'>When: ".$datenew = date("l jS \of F h:i:s A", strtotime("$date"))."</p>"; 
- echo "<hr>"; 
+  echo "<p class='photo'><a href='http://www.twitter.com/" . $user['screen_name'] ."'</a><img src='" . $user['profile_image_url_https']. "'>"; 
+  echo "<p id='user_name'><a href='http://www.twitter.com/". $user['screen_name'] . "'>" .$user['screen_name'] ."</a></p><p class='tweet' id='user_id'> @". $user['screen_name'] . "<p id='twitter_date'>".$datenew = date("M j", strtotime("$date"))."</p>"; 
+  echo "<p class='tweet' id='twitter_text'>" . $items['text'] . "<br>"; 
+  echo "<hr>"; 
 }
 
 ?>
@@ -428,24 +506,46 @@ foreach ($string['statuses']as $items)
 <div class="col-md-8 col-sm-12">
    <a name="map"><h2>Cities in Struggle</h2></a>
     <p><a class="links" href="#">Return to top</a></p>
-    <p><i>The following Syrian cities and suburbs have seen intense fighting and heavy casualties since 2011.</i></p>
-  <div id="map-wrapper"><div id="map-canvas" style="width: 100%; height: 100%"></div></div>
-       
-<a name="nyt"><h2>Recent Articles from <i>The New York Times</i></h2></a>
+    <p><i>The following Syrian cities and suburbs have seen intense fighting and heavy casualties since 2011. Click on the graph tab to see the death toll by city.</i></p>
+    
+    
+    <ul class="nav nav-tabs">
+    <li class="active"><a class="news-links" href="#map-wrapper" data-toggle="tab">Map</a></li>
+    <li><a class="news-links" href="#highchart" data-toggle="tab">Graph of Death Toll</a></li>
+    </ul>       
+
+  <div class="tab-content">
+  <div class="tab-pane active" id="map-wrapper">
+  <div id="map-wrapper"><div id="map-canvas" style="width: 100%; height: 100%"></div></div></div>
+  <div class="tab-pane" id="highchart"><div id="chart" style="height: 90%"></div></div>
+</div>
+    
+
+  <a name="nyt"><h2>Recent Articles in the News</h2></a>
+  <a class="links" href="#"><p>Return to top</a></p>
+  <ul class="nav nav-tabs">
+  <li class="active"><a class="news-links" href="#nytimes" data-toggle="tab">The New York Times</a></li>
+  <li><a class="news-links" href="#guardian" data-toggle="tab">The Guardian</a></li>
+
+</ul>       
+
+<div class="tab-content">
+  <div class="tab-pane active" id="nytimes">
+    <div id="results3"></div></div>
+  <div class="tab-pane" id="guardian"><div id="results4"></div></div>
+</div>
 <a class="links" href="#"><p>Return to top</a></p>
-<div id="results3"></div>
 
 
-<div id="results4"></div>
+<div id="chart"></div>
+
 </div> <!--end col-md-8 --> 
 
 </div>  <!--end row-->
 
-
-
-
 </div> <!--end container--> 
    <script src="js/bootstrap.min.js"></script>
    <script type="text/javascript" src="http://cdn.knightlab.com/libs/timeline/latest/js/storyjs-embed.js"></script>
+<div id="footer"></div>
 </body>
 </html>
